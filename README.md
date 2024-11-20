@@ -16,3 +16,17 @@ In this work, we applied the Octree-Based Convolutional Neural Networks (CNN) fo
 The micro-CT rock structure representation is highly favorable for Octree structure application. In this work, we utilize the Octree representation to save computational resources and decrease GPU memory requirements. We train the algorithm with Stages, with Progressive Growing technique. On each Stage, we memorize "dense" regions, remove them from the computations, and process "mixed" regions only for the next Stage. Schematically, the algorithm looks as follow  
 
 ![Schematic algorithm description](GH_image/alg.jpg)
+
+For more details, please, reference our paper
+
+# Environment
+Minkovski Engine library it tricky to install. For convenience, you may use the provided ```environment.yml``` file as follow:  
+1. Create a new environment from the .yml file:
+```
+conda env create -f environment.yml
+```
+2. Activate the new environment once it’s created:
+```
+conda activate environment
+```
+
