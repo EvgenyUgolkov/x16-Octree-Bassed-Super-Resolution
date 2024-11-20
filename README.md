@@ -61,7 +61,10 @@ where
 
 ```-d``` The name of the directory under the 'progress' directory where the pre-trained Generator parameters were saved,    
  
-```-volume_size_to_evaluate``` The size of the Low-Resolution volume to be Super-Resolved,    
+```-volume_size_to_evaluate``` The size of the Low-Resolution volume to be Super-Resolved;
+
+# Pre-trained model  
+Pre-trained model for Berea sandstome can be found in ![progress/test](progress/test) folder
 
 ```-g_image_path``` Relative path to the Low-Resolution image to Super-Resolve inside ![data](data);
 
