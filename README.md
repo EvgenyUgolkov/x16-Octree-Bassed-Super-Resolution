@@ -1,5 +1,5 @@
 # x16-Octree-Bassed-Super-Resolution
-This repository contains the code for the x16 Octree-Based Super-Resolution algorithm
+This repository contains the code for the x16 Octree-Based Super-Resolution algorithm for rocks
 
 # References
 For inspiration, we used the following sources:
