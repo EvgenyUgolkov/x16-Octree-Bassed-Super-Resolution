@@ -15,4 +15,4 @@ In this work, we applied the Octree-Based Convolutional Neural Networks (CNN) fo
 # Algorithm description
 The micro-CT rock structure representation is highly favorable for Octree structure application. In this work, we utilize the Octree representation to save computational resources and decrease GPU memory requirements. We train the algorithm with Stages, with Progressive Growing technique. On each Stage, we memorize "dense" regions, remove them from the computations, and process "mixed" regions only for the next Stage. Schematically, the algorithm looks as follow  
 
-![Schematic algorithm description](GH_image/alg.png) 
+![Schematic algorithm description](GH_image/alg.jpg)
