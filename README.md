@@ -3,7 +3,7 @@ This repository contains the code for the x16 Octree-Based Super-Resolution algo
 
 # References
 For inspiration, we used the following sources:
-1. For the 2D-3D fusion: https://github.com/tldr-group/SuperRes
+1. For the 2D-3D fusion Super-Resolution algorithm: https://github.com/tldr-group/SuperRes
 2. For the Octree-Based algorithm: https://github.com/lmb-freiburg/ogn
 3. For Octree-Based implementation: https://github.com/NVIDIA/MinkowskiEngine
 
