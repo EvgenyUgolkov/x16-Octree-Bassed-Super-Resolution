@@ -39,19 +39,17 @@ conda activate environment
 The training can be launched from the ![code](code) fodler with the following command:
 
 ```
-python3 Architecture.py -d test --with_rotation -phases_idx 1 2 3 -sf 16 -g_image_path Berea_7um_3.tif -d_image_path LR_M_-1.tif LR_M_0.tif LR_M_1.tif LR_M_2.tif Berea_CSLM_clay_gen.tif
+python3 Architecture.py -d test --with_rotation -g_image_path Berea_7um_3.tif -d_image_path LR_M_-1.tif LR_M_0.tif LR_M_1.tif LR_M_2.tif Berea_CSLM_clay_gen.tif
 ```
 where  
 
 ```-d``` The name of the directory to save the Generator in, under the 'progress' directory,     
 
 ```--with_rotation``` Use this option for data augmentaion (rotations and mirrors) of the High-Resolution input,      
-
-```-phases_idx``` The indices of the phases of the Low-Resolution input to be compared with the Super-Resolution output,    
-
+   
 ```-g_image_path``` Relative path to the Low-Resolution 3D volume inside ![data](data),    
 
-```-d_image_path``` Relative path to the High-Resolution 2D slice for each Stage inside ![data](data);  
+```-d_image_path``` Relative path to the High-Resolution 2D slices for each Stage inside ![data](data);  
 
 # Evaluation  
 To use the pre-trained Generator for processing Low-Resolution image, launch the following command from the ![code](code) folder 
