@@ -20,7 +20,7 @@ The micro-CT representation of the rock structure is highly favorable for Octree
 For more details, please, reference our paper
 
 # Results demonstration  
-3D images with arbitrary large size can be generated from the chunks of LR input. Here, we Super-Resolved LR cube with side 256 and resolution 7 um/voxel into SR cube with side 4096 and resolution 0.4375 um/voxel. The presented algorithm increases resolution, inserts sub-micron porosity, and corrects segmentation
+3D images with arbitrary large size can be generated from the chunks of LR input. Here, we Super-Resolved Low-Resolution cube with side 256 and resolution 7 um/voxel into Super-Resolution cube with side 4096 and resolution 0.4375 um/voxel. The presented algorithm increases resolution, inserts sub-micron porosity, and corrects segmentation
 
 ![Results](GH_image/res.jpg)
 
