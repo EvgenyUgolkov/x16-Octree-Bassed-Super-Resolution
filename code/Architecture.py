@@ -24,7 +24,7 @@ from torch.cuda.amp import GradScaler, autocast
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:128'
 
 if os.getcwd().endswith('code'):
-    os.chdir('..')  # current directory from /SuperRes/code to SuperRes/
+    os.chdir('..')  
 
 #################################################################
 # All variables initialization

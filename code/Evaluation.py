@@ -10,6 +10,9 @@ import torch.nn as nn
 import MinkowskiEngine as ME
 from modules_ME_2_16 import *
 
+if os.getcwd().endswith('code'):
+    os.chdir('..')  
+
 # Parsing arguments:
 parser = argparse.ArgumentParser()
 
