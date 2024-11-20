@@ -21,8 +21,10 @@ from modules_ME_2_16 import *
 from torch.cuda.amp import GradScaler, autocast
 
 # os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
+# The command below help to process data with smaller chunks and prevents OOM error
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:128'
 
+# Change the directory to pick up training dataset
 if os.getcwd().endswith('code'):
     os.chdir('..')  
 
@@ -47,6 +49,7 @@ separator, super_sampling = args.separator, args.super_sampling
 if not os.path.exists(ImageTools.progress_dir + progress_dir):
     os.makedirs(ImageTools.progress_dir + progress_dir)
 
+# Where to save the trained model
 PATH_G = 'progress/' + progress_dir + '/g_weights.pth'
 PATH_D = 'progress/' + progress_dir + '/d_weights.pth'
 eta_file = 'eta.npy'
@@ -54,6 +57,7 @@ eta_file = 'eta.npy'
 # Root directory for dataset
 dataroot = "data/"
 
+# The path to the training dataset
 D_images = [dataroot + d_path for d_path in args.d_image_path]
 G_image = dataroot + args.g_image_path
 
@@ -63,11 +67,13 @@ g_batch_slices = [0]  # in 3D different views of the cube, better to keep it as
 # adding 45 degree angle instead of z axis slices
 forty_five_deg = False
 
+# The number of GPUs
 ngpu = 2
 
 # Number of HR number of phases:
 nc_d = 5
 
+# Batch size for G, parameter determying the nunber of epochs, and batch soze for D
 batch_size_G_for_D, batch_size_G, batch_size_D = 1, 32, 64
 
 # number of iterations in each epoch
@@ -94,6 +100,9 @@ def main_worker(gpu, ngpus_per_node, args):
 
     ###################################################################################################################################
     def plot_intermediate(g_input_plot, output_plot):
+        """
+        Plots the input and generated images each epoch
+        """
         g_input_plot = ImageTools.one_hot_decoding(np.array(g_input_plot[:, :-1].detach().cpu()))
         output_plot = ImageTools.one_hot_decoding(ImageTools.fractions_to_ohe(np.array(output_plot.detach().cpu())))
         images = [g_input_plot, output_plot]
@@ -126,6 +135,7 @@ def main_worker(gpu, ngpus_per_node, args):
         images = images + [down, g_output]
         ImageTools.plot_fake_difference(images, save_dir, filename, with_deg)
     ###################################################################################################################################
+    # Stage 1
     class G_0(torch.nn.Module):
         def __init__(self, chin_out, channels, factors, steps):
             super(G_0, self).__init__()
@@ -183,6 +193,7 @@ def main_worker(gpu, ngpus_per_node, args):
             
             return x, memorized_0, sftmx_dense
     ###################################################################################################################################
+    # Stage 2
     class G_1(torch.nn.Module):
         def __init__(self, chin_out, channels, factors, steps):
             super(G_1, self).__init__()
@@ -227,6 +238,7 @@ def main_worker(gpu, ngpus_per_node, args):
     
             return x, memorized_1, sftmx_dense
     ###################################################################################################################################
+    # Stage 3
     class G_2(torch.nn.Module):
         def __init__(self, chin_out, channels, factors, steps):
             super(G_2, self).__init__()
@@ -270,6 +282,7 @@ def main_worker(gpu, ngpus_per_node, args):
     
             return x, memorized_2, sftmx_dense
     ###################################################################################################################################
+    # Stage 4
     class G_3(torch.nn.Module):
         def __init__(self, chin_out, channels, factors, steps):
             super(G_3, self).__init__()
@@ -313,6 +326,7 @@ def main_worker(gpu, ngpus_per_node, args):
     
             return x, memorized_3, sftmx_dense
     ###################################################################################################################################
+    # Stage 5
     class G_4(torch.nn.Module):
         def __init__(self, chin_out, channels, factors, steps):
             super(G_4, self).__init__()
@@ -350,6 +364,7 @@ def main_worker(gpu, ngpus_per_node, args):
     
             return sftmx_dense
     ###################################################################################################################################
+    # The class to combine 5 Stages together
     class ProgressiveGenerator(nn.Module):
         def __init__(self, stage0, stage1, stage2, stage3, stage4):
             super(ProgressiveGenerator, self).__init__()
@@ -441,6 +456,7 @@ def main_worker(gpu, ngpus_per_node, args):
             return sftmx_dense
                 
     ###################################################################################################################################
+    # D for Stage 1
     class D_0(nn.Module):
         def __init__(self):
             super(D_0, self).__init__()
@@ -465,6 +481,7 @@ def main_worker(gpu, ngpus_per_node, args):
             x = self.forward_layers(x)
             return x
     ###################################################################################################################################
+    # D for Stage 2
     class D_1(nn.Module):
         def __init__(self):
             super(D_1, self).__init__()
@@ -501,6 +518,7 @@ def main_worker(gpu, ngpus_per_node, args):
         def set_alpha(self, epoch, transition_epochs=20):
             self.alpha = min(epoch / transition_epochs, 1.0) 
     ###################################################################################################################################
+    # D for Stage 3
     class D_2(nn.Module):
         def __init__(self):
             super(D_2, self).__init__()
@@ -537,6 +555,7 @@ def main_worker(gpu, ngpus_per_node, args):
         def set_alpha(self, epoch, transition_epochs=20):
             self.alpha = min(epoch / transition_epochs, 1.0) 
     ###################################################################################################################################
+    # D for Stage 4
     class D_3(nn.Module):
         def __init__(self):
             super(D_3, self).__init__()
@@ -573,6 +592,7 @@ def main_worker(gpu, ngpus_per_node, args):
         def set_alpha(self, epoch, transition_epochs=20):
             self.alpha = min(epoch / transition_epochs, 1.0) 
     ###################################################################################################################################
+    # D for Stage 5
     class D_4(nn.Module):
         def __init__(self):
             super(D_4, self).__init__()
@@ -655,6 +675,7 @@ def main_worker(gpu, ngpus_per_node, args):
     # ########################################################################################
 
     ###################################################################################################################################
+    # WGAN-GP training algorithm 
     def train_progressive_stage(num_epochs, model_G, netD, optimizerD, BM_D, stage):
         
         scalerG = GradScaler(growth_interval=100, init_scale=8192)
@@ -825,6 +846,7 @@ def main_worker(gpu, ngpus_per_node, args):
         
         print('Finished this Stage')
 
+    # Initiate the DDP training
     args.gpu = gpu
     args.rank = 0 * ngpus_per_node + gpu
     dist.init_process_group(
@@ -854,7 +876,7 @@ def main_worker(gpu, ngpus_per_node, args):
     wandb.init(project='SuperRes', config=args, name=progress_dir)
     print('The project was initiated OK')
     
-    # Create the down-sample object to compare between super-res and low-res
+    # Create the down-sample object to compare between super-res and low-res for each Stage
     down_sample_object = LearnTools.DownSample(squash, n_dims, to_low_idx, scale_f, device, super_sampling, separator).to(device)
     scale_f_1 = 1
     scale_f_2 = 2
@@ -888,13 +910,16 @@ def main_worker(gpu, ngpus_per_node, args):
     
     # optimizerG = optim.Adam(model_G.parameters(), lr=lr, betas=(beta1, 0.999))                       ### exactly this one was the same for all before ###
     
+    # Track it in the weight and biases
     wandb.watch(model_G, log='all')
     
+    # Batch Maker for the Generator
     stage=0
     BM_G = BatchMaker(stage, device=device, to_low_idx=to_low_idx, path=G_image, sf=scale_f, dims=n_dims, stack=False, down_sample=down_sample, 
                       low_res=not down_sample, rot_and_mir=False, squash=squash)
 
     # scalerG = GradScaler()
+    # Scaler optimization for the Mixed Precision training. Tricky and smart optimization to prevent Mixed Precision artefacts 
     scalerD = GradScaler(growth_interval=100, init_scale=8192)
     min_scale = 1
     

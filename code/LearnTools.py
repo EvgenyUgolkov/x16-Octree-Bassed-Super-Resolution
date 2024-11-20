@@ -18,7 +18,7 @@ def return_args(parser):
     parser.add_argument('-d', '--directory', type=str, default='default',
                         help='Stores the progress output in the \
                         directory name given')
-    parser.add_argument('-sf', '--scale_factor', type=float, default=4,
+    parser.add_argument('-sf', '--scale_factor', type=float, default=16,
                         help='scale factor between high res and low res.')
     parser.add_argument("--down_sample", default=False, action="store_true",
                         help="Down samples the input for G for testing "
