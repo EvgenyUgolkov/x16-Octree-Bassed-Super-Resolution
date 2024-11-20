@@ -9,6 +9,7 @@ For inspiration, we used the following sources:
 
 # Introduction
 This work is based on our previous research https://github.com/EvgenyUgolkov/8x_Super-Resolution/tree/main, where we worked with 8x Super-Resolution.  
+
 In this work, we applied the Octree-Based Convolutional Neural Networks (CNN) for the Super-Resolution problem applied to the micro-CT images of rocks. We achieved 16x Super-Resolution. We demonstrate the capabilities on the example of Berea sandstone.
 
 # Algorithm description
