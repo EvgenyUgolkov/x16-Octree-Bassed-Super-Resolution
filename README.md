@@ -15,14 +15,14 @@ In this work, we applied the Octree-Based Convolutional Neural Networks (CNN) fo
 # Algorithm description
 The micro-CT representation of the rock structure is highly favorable for Octree structure application. In this work, we utilize the Octree representation to save computational resources and decrease GPU memory requirements. We train the algorithm with Stages, with Progressive Growing technique. On each Stage, we memorize "dense" regions, remove them from the computations, and process "mixed" regions only for the next Stage. Schematically, the algorithm looks as follow  
 
-![Schematic algorithm description](GH_image/alg.jpg)
+![Schematic algorithm description](GH_image/Slide_3.jpg)
 
 For more details, please, reference our paper
 
 # Results demonstration  
 3D images with arbitrary large size can be generated from the chunks of LR input. Here, we Super-Resolved Low-Resolution cube with side 256 and resolution 7 um/voxel (top) into Super-Resolution cube with side 4096 and resolution 0.4375 um/voxel (bottom). The presented algorithm increases resolution, inserts sub-micron porosity, and corrects segmentation
 
-![Results](GH_image/FINAL COMAR_3.jpg)
+![Results](GH_image/FINAL_COMAR_3.jpg)
 
 # Environment
 Minkovski Engine library it tricky to install. For convenience, you may use the provided ```environment.yml``` file as follow:  
