@@ -1,5 +1,5 @@
 # x16-Octree-Bassed-Super-Resolution
-This repository contains the code for the x16 Octree-Based Super-Resolution algorithm for rocks
+This repository contains the code for the 16x Octree-Based Super-Resolution algorithm for rocks
 
 # References
 For inspiration, we used the following sources:
@@ -13,7 +13,7 @@ This work is based on our previous research https://github.com/EvgenyUgolkov/8x_
 In this work, we applied the Octree-Based Convolutional Neural Networks (CNN) for the Super-Resolution problem applied to the micro-CT images of rocks. We achieved 16x Super-Resolution. We demonstrate the capabilities on the example of Berea sandstone  
 
 # Algorithm description
-The micro-CT representation of the rock structure is highly favorable for Octree structure application. In this work, we utilize the Octree representation to save computational resources and decrease GPU memory requirements. We train the algorithm with Stages, with Progressive Growing technique. On each Stage, we memorize "dense" regions, remove them from the computations, and process "mixed" regions only for the next Stage. Schematically, the algorithm looks as follow  
+The micro-CT representation of the rock structure is highly favorable for Octree structure application. In this work, we utilize the Octree representation to save computational resources and decrease GPU memory requirements. We train the algorithm with Stages, with Progressive Growing technique. On each Stage, we memorize "dense" regions, remove them from the computations, and process "mixed" regions only for the next Stage. Schematically, the algorithm looks as follows  
 
 ![Schematic algorithm description](GH_image/Slide_3.jpg)
 
