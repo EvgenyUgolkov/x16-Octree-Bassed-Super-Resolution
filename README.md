@@ -22,7 +22,7 @@ For more details, please, reference our paper
 # Results demonstration  
 3D images with arbitrary large size can be generated from the chunks of LR input. Here, we Super-Resolved Low-Resolution cube with side 256 and resolution 7 um/voxel (top) into Super-Resolution cube with side 4096 and resolution 0.4375 um/voxel (bottom). The presented algorithm increases resolution, inserts sub-micron porosity, and corrects segmentation
 
-![Results](GH_image/res.jpg)
+![Results](GH_image/FINAL COMAR_3.jpg)
 
 # Environment
 Minkovski Engine library it tricky to install. For convenience, you may use the provided ```environment.yml``` file as follow:  
